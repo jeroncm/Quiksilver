@@ -6,23 +6,29 @@ interface AIPredictionProps {
   prediction: AIPrediction | null;
 }
 
-const Scenario: React.FC<{ title: string; data: PredictionScenario }> = ({ title, data }) => (
+const Scenario: React.FC<{ title: string; data?: PredictionScenario }> = ({ title, data }) => (
   <div className="bg-slate-800/60 p-4 rounded-lg border border-white/10">
     <h4 className="font-semibold text-slate-300 mb-3">{title}</h4>
-    <div className="grid grid-cols-3 gap-2 text-center text-sm">
-      <div>
-        <p className="text-red-400 text-xs">Worst</p>
-        <p className="font-mono font-semibold text-slate-200 mt-1">₹{(data.worstCase ?? 0).toFixed(2)}</p>
+    {data ? (
+      <div className="grid grid-cols-3 gap-2 text-center text-sm">
+        <div>
+          <p className="text-red-400 text-xs">Worst</p>
+          <p className="font-mono font-semibold text-slate-200 mt-1">₹{(data.worstCase ?? 0).toFixed(2)}</p>
+        </div>
+        <div>
+          <p className="text-slate-400 text-xs">Average</p>
+          <p className="font-mono font-semibold text-slate-200 mt-1">₹{(data.averageCase ?? 0).toFixed(2)}</p>
+        </div>
+        <div>
+          <p className="text-green-400 text-xs">Best</p>
+          <p className="font-mono font-semibold text-slate-200 mt-1">₹{(data.bestCase ?? 0).toFixed(2)}</p>
+        </div>
       </div>
-      <div>
-        <p className="text-slate-400 text-xs">Average</p>
-        <p className="font-mono font-semibold text-slate-200 mt-1">₹{(data.averageCase ?? 0).toFixed(2)}</p>
+    ) : (
+      <div className="text-center py-4">
+        <p className="text-slate-500 text-xs">Prediction data not available.</p>
       </div>
-      <div>
-        <p className="text-green-400 text-xs">Best</p>
-        <p className="font-mono font-semibold text-slate-200 mt-1">₹{(data.bestCase ?? 0).toFixed(2)}</p>
-      </div>
-    </div>
+    )}
   </div>
 );
 

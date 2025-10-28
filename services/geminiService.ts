@@ -89,11 +89,23 @@ export const fetchAIPrediction = async (currentPrice: number, historicalData: Hi
       : `The current price is ${currentPrice}.`;
     
     const prompt = `
-      Given the current silver price of ${currentPrice} and the recent trend (${historicalTrendSummary}), act as a financial analyst.
-      Provide a concise investment recommendation for today.
-      Predict tomorrow's price movement.
-      Also, provide best case, worst case, and average case price predictions for holding 1 gram of silver purchased today over 1, 5, and 10 year horizons.
-      Base your analysis on general market volatility, inflation, and industrial demand for silver. Do not give financial advice, but provide a plausible, data-driven forecast.
+      Act as an expert financial analyst specializing in precious metals.
+      The current price for 1 gram of silver is ${currentPrice}.
+      The recent 30-day trend shows: ${historicalTrendSummary}.
+
+      Your task is to provide a detailed price prediction analysis. Please incorporate the following factors into your reasoning:
+      1.  **Global Economic Indicators:** Consider recent inflation data, central bank policies (e.g., interest rate changes), and GDP growth forecasts.
+      2.  **Industrial Demand:** Factor in demand from sectors like electronics, solar energy, and automotive.
+      3.  **Investment Sentiment:** Analyze the current market sentiment for safe-haven assets versus risk-on assets.
+      4.  **Geopolitical Climate:** Acknowledge any significant global events that could impact market stability and commodity prices.
+      5.  **Currency Strength:** Consider the relative strength of major currencies against the local currency.
+
+      Based on this comprehensive analysis, provide the following in your JSON response:
+      - **recommendation:** A concise investment recommendation for today (e.g., 'Strong Buy Opportunity', 'Cautious Hold', 'Consider Profit-Taking').
+      - **tomorrow:** A specific prediction for tomorrow's price movement (e.g., 'A slight increase towards [price]', 'Expected to be stable within the [price range]').
+      - **oneYear, fiveYear, tenYear:** Precise price predictions for 1, 5, and 10-year horizons, including best, worst, and average case scenarios. Aim for realistic, data-informed price targets.
+
+      Do not include any disclaimers or conversational text; strictly adhere to the JSON schema.
     `;
 
     const response = await ai.models.generateContent({
